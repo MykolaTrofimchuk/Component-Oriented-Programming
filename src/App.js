@@ -1,25 +1,41 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
-function App() {
+// Компонент клітинки судоку
+const SudokuCell = ({ value, onClick, isSelected }) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div
+          className={`sudoku-cell ${isSelected ? 'selected' : ''}`}
+          onClick={onClick}
+      >
+        {value !== 0 ? value : ''}
+      </div>
   );
-}
+};
 
-export default App;
+// Компонент для гри Судоку
+const SudokuBoard = () => {
+  // Ініціалізуємо 9x9 поле
+  const initialBoard = Array(9).fill().map(() => Array(9).fill(0));
+
+  // Створюємо стан для поля
+  const [board, setBoard] = useState(initialBoard);
+
+
+  return (
+      <div className="sudoku-board" tabIndex="0">
+        {board.map((row, rowIndex) => (
+            <div key={rowIndex} className="sudoku-row">
+              {row.map((cellValue, colIndex) => (
+                  <SudokuCell
+                      key={colIndex}
+                      value={cellValue}
+                  />
+              ))}
+            </div>
+        ))}
+      </div>
+  );
+};
+
+export default SudokuBoard;
