@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 function useAudio(url) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [volume, setVolume] = useState(1.0);
+    const [currentTime, setCurrentTime] = useState(0);
     const audioRef = useRef(new Audio(url));
 
     useEffect(() => {
@@ -13,6 +14,23 @@ function useAudio(url) {
     useEffect(() => {
         audioRef.current.volume = volume;
     }, [volume]);
+
+    useEffect(() => {
+        const audio = audioRef.current;
+        const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
+
+        audio.addEventListener('timeupdate', handleTimeUpdate);
+        return () => {
+            audio.removeEventListener('timeupdate', handleTimeUpdate);
+        };
+    }, []);
+
+    useEffect(() => {
+        const audio = audioRef.current;
+        if (audio.currentTime !== currentTime) {
+            audio.currentTime = currentTime;
+        }
+    }, [currentTime]);
 
     useEffect(() => {
         const audio = audioRef.current;
@@ -32,6 +50,12 @@ function useAudio(url) {
         }
     };
 
+    const seek = (time) => {
+        if (time >= 0 && time <= audioRef.current.duration) {
+            setCurrentTime(time);
+        }
+    };
+
     return {
         isPlaying,
         play,
@@ -39,6 +63,8 @@ function useAudio(url) {
         togglePlayPause,
         changeVolume,
         volume,
+        currentTime,
+        seek,
     };
 }
 
