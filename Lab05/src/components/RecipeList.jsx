@@ -1,20 +1,24 @@
-import { useContext } from "react";
-import RecipeContext from "../context/RecipeContext";
+import { useStore } from "effector-react";
+import { $filteredRecipes, removeRecipe } from "../models/recipeModel";
 
 const RecipeList = () => {
-    const { recipes, dispatch } = useContext(RecipeContext);
+    const recipes = useStore($filteredRecipes);
 
     return (
         <ul>
-            {recipes.map(recipe => (
-                <li key={recipe.id}>
-                    <h3>{recipe.title} ({recipe.category})</h3>
-                    <p>{recipe.description}</p> {/* description */}
-                    <button onClick={() => dispatch({ type: "REMOVE_RECIPE", payload: recipe.id })}>
-                        Delete
-                    </button>
-                </li>
-            ))}
+            {recipes.length === 0 ? (
+                <p>No recipes available.</p>
+            ) : (
+                recipes.map((recipe) => (
+                    <li key={recipe.id}>
+                        <div>
+                            <span>{recipe.title} - {recipe.category}</span>
+                            <p>{recipe.description}</p> {/* description */}
+                        </div>
+                        <button onClick={() => removeRecipe(recipe.id)}>Delete</button>
+                    </li>
+                ))
+            )}
         </ul>
     );
 };

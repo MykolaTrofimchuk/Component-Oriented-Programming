@@ -1,28 +1,35 @@
-import { useContext, useState } from "react";
-import RecipeContext from "../context/RecipeContext";
+import { useStore } from "effector-react";
+import { filterRecipes, $filter } from "../models/recipeModel";
 
 const RecipeFilters = () => {
-    const { recipes } = useContext(RecipeContext);
-    const [filter, setFilter] = useState("all");
-
-    const filteredRecipes = recipes.filter(recipe => {
-        if (filter === "all") return true;
-        return recipe.category === filter;
-    });
+    const currentFilter = useStore($filter);
 
     return (
         <div>
-            <button onClick={() => setFilter("all")}>All</button>
-            <button onClick={() => setFilter("breakfast")}>Breakfast</button>
-            <button onClick={() => setFilter("lunch")}>Lunch</button>
-            <button onClick={() => setFilter("dinner")}>Dinner</button>
-            <ul>
-                {filteredRecipes.map(recipe => (
-                    <li key={recipe.id}>
-                        {recipe.title} - {recipe.category}
-                    </li>
-                ))}
-            </ul>
+            <button
+                onClick={() => filterRecipes("all")}
+                style={{ fontWeight: currentFilter === "all" ? "bold" : "normal" }}
+            >
+                All
+            </button>
+            <button
+                onClick={() => filterRecipes("breakfast")}
+                style={{ fontWeight: currentFilter === "breakfast" ? "bold" : "normal" }}
+            >
+                Breakfast
+            </button>
+            <button
+                onClick={() => filterRecipes("lunch")}
+                style={{ fontWeight: currentFilter === "lunch" ? "bold" : "normal" }}
+            >
+                Lunch
+            </button>
+            <button
+                onClick={() => filterRecipes("dinner")}
+                style={{ fontWeight: currentFilter === "dinner" ? "bold" : "normal" }}
+            >
+                Dinner
+            </button>
         </div>
     );
 };
