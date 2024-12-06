@@ -8,7 +8,8 @@ const RecipeList = () => {
         <ul>
             {recipes.map(recipe => (
                 <li key={recipe.id}>
-                    <span>{recipe.title} - {recipe.category}</span>
+                    <h3>{recipe.title} ({recipe.category})</h3>
+                    <p>{recipe.description}</p> {/* description */}
                     <button onClick={() => dispatch({ type: "REMOVE_RECIPE", payload: recipe.id })}>
                         Delete
                     </button>

@@ -5,16 +5,23 @@ const RecipeForm = () => {
     const { dispatch } = useContext(RecipeContext);
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
+    const [description, setDescription] = useState("");
 
     const handleSubmit = e => {
         e.preventDefault();
         if (title.trim() && category.trim()) {
             dispatch({
                 type: "ADD_RECIPE",
-                payload: { id: Date.now(), title, category }
+                payload: {
+                    id: Date.now(),
+                    title,
+                    category,
+                    description,
+                }
             });
             setTitle("");
             setCategory("");
+            setDescription("");
         }
     };
 
@@ -32,6 +39,12 @@ const RecipeForm = () => {
                 <option value="lunch">Lunch</option>
                 <option value="dinner">Dinner</option>
             </select>
+            <textarea
+                value={description}
+                onChange={e => setDescription(e.target.value)}
+                placeholder="Enter recipe description..."
+                rows="5"
+            />
             <button type="submit">Add Recipe</button>
         </form>
     );
