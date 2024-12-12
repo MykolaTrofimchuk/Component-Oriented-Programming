@@ -1,8 +1,32 @@
-# React + Vite
+# Recipe Book (Книга рецептів)
+## Ідея застосунку
+    Користувач може:
+    - Додати новий рецепт.
+    - Переглянути список рецептів.
+    - Переглянути деталі рецепту.
+    - Видалити рецепт.
+    - Відфільтрувати рецепти за категоріями.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Обрані практики (6 практик)
+### 1. Розбиття на дрібні компоненти
+Основні компоненти:
+- `RecipeList` (відображає список рецептів).
+- `RecipeItem` (один рецепт у списку). 
+- `RecipeForm` (додавання нового рецепту). 
+- `RecipeDetails` (детальний опис рецепту). 
+   
+### 2. Контекст (React Context API) для спільного стану
+Використовується `RecipeContext` для зберігання списку рецептів.
 
-Currently, two official plugins are available:
+### 3. Мемоїзація (React.memo, useMemo, useCallback)
++ Компоненти `RecipeItem` мемоїзуються для покращення продуктивності.
++ Логіка фільтрації рецептів мемоїзується через `useMemo`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 4. Кастомні хуки для логіки
+Хук `useRecipeManager` для керування рецептами (додавання/видалення/оновлення).
+
+### 5. Проп-тайпи для валідації
+Використання бібліотеки `prop-types` для типізації пропсів компонентів.
+
+### 6. Організація коду за типами (components, context, hooks)
+Чітке розділення файлів за функціоналом.
