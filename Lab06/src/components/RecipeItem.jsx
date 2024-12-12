@@ -7,9 +7,10 @@ const RecipeItem = memo(({ recipe }) => {
 
     return (
         <li>
-            <strong>{recipe.name}</strong> - {recipe.description || 'none'}
-            <button onClick={() => deleteRecipe(recipe.id)}>Delete</button>
+            <h2><strong>{recipe.name}</strong></h2>
+            <i>{recipe.category}</i>
             <RecipeDetails recipe={recipe} />
+            <button onClick={() => deleteRecipe(recipe.id)}>Delete</button>
         </li>
     );
 });

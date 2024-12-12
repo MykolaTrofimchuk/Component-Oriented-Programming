@@ -6,6 +6,7 @@ const RecipeForm = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [details, setDetails] = useState('');
+    const [category, setCategory] = useState('Dessert');
     const { addRecipe } = useRecipeManager();
 
     const handleSubmit = (e) => {
@@ -18,11 +19,13 @@ const RecipeForm = () => {
                 name: formattedName,
                 description: description || 'none',
                 details,
+                category,
                 createdAt: new Date().toLocaleString(),
             });
             setName('');
             setDescription('');
             setDetails('');
+            setCategory('Dessert');
         } catch (error) {
             alert(error.message);
         }
@@ -45,6 +48,7 @@ const RecipeForm = () => {
                     type="text"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
+                    maxLength={16}
                 />
             </div>
             <div>
@@ -54,6 +58,17 @@ const RecipeForm = () => {
                     onChange={(e) => setDetails(e.target.value)}
                     required
                 ></textarea>
+            </div>
+            <div>
+                <label>Category: </label>
+                <select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                >
+                    <option value="Dessert">Dessert</option>
+                    <option value="Main Course">Main Course</option>
+                    <option value="Appetizer">Appetizer</option>
+                </select>
             </div>
             <button type="submit">Add Recipe</button>
         </form>

@@ -4,6 +4,6 @@ export const formatRecipeName = (name) => {
 
 export const validateRecipe = (recipe) => {
     if (!recipe.name || !recipe.details) {
-        throw new Error('Name, description, and details are required.');
+        throw new Error('Name and details are required.');
     }
 };
